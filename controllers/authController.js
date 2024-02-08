@@ -1,15 +1,15 @@
-// authController.js
 import Users from "../models/users.js";
+import Profile from "../models/profiles.js";
 import bcryptjs from "bcryptjs";
 import jwt from "jsonwebtoken";
 
-const generateTokens = (user) => {
+const generateTokens = (users) => {
   const accessToken = jwt.sign(
     {
-      userId: user.id,
-      username: user.username,
-      email: user.email,
-      role: user.role,
+      userId: users.id,
+      name: users.name,
+      email: users.email,
+      role: users.role,
     },
     process.env.JWT_SECRET,
     { expiresIn: "1h" }
@@ -17,10 +17,10 @@ const generateTokens = (user) => {
 
   const refreshToken = jwt.sign(
     {
-      userId: user.id,
-      username: user.username,
-      email: user.email,
-      role: user.role,
+      userId: users.id,
+      name: users.name,
+      email: users.email,
+      role: users.role,
     },
     process.env.JWT_REFRESH_SECRET,
     { expiresIn: "7d" }
@@ -43,16 +43,19 @@ export const Login = async (req, res) => {
 
     if (!match) return res.status(400).json({ msg: "Password wrong" });
 
+    // Jika otentikasi berhasil, buat token akses dan refresh token
     const { accessToken, refreshToken } = generateTokens(user);
     const role = user.role;
 
+    // Simpan refresh token di database
     user.refreshToken = refreshToken;
     await user.save();
 
     res.json({ accessToken, role });
   } catch (error) {
     console.error(error); // Log error untuk debugging
-    res.status(500).json({ msg: "Internal Server Error" }); // Tanggapan umum untuk kesalahan server
+    res.status(500).json({ msg: "Internal Server Error" }); 
+    console.log(error.message);
   }
 };
 
@@ -62,17 +65,16 @@ export const Me = async (req, res) => {
       where: {
         id: req.userId,
       },
-      attributes: ["id", "uuid", "username", "email", "role"],
+      attributes: ["id", "uuid", "name", "email", "role"],
     });
 
     let profile;
     if (req.role === "user") {
-      // Pastikan bahwa variabel profile yang digunakan ada di modul yang diimport.
-      profile = await profile.findOne({
+      profile = await Profile.findOne({ // Perbaiki penggunaan model Profile di sini
         where: {
           userId: user.id,
         },
-      });      
+      });
     }
 
     const responseAll = {
@@ -81,7 +83,7 @@ export const Me = async (req, res) => {
     };
     res.status(200).json(responseAll);
   } catch (error) {
-    console.error(error); // Log error untuk debugging
-    res.status(500).json({ msg: "Internal Server Error" }); // Tanggapan umum untuk kesalahan server
+    console.error(error);
+    res.status(500).json({ msg: "Internal Server Error" });
   }
 };
