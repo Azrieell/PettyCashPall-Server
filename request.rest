@@ -1,0 +1,59 @@
+//  GET ALL USER
+GET http://localhost:5000/users/
+
+###
+// GET SINGLE USER
+GET http://localhost:5000/users/9f2fe5ba-dac1-42a5-9e65-b6e77e912c4d
+
+###
+
+// ADD USER
+POST  http://localhost:5000/users/add
+Content-Type: application/json
+
+{
+  "username": "Maguire",
+  "email": "maguire@gmail.com",
+  "password": "12345",
+  "confPassword": "12345",
+  "role": "user"
+}
+
+
+###
+
+// UPDATE USER
+PUT http://localhost:5000/users/edit/6b5e128e-c46a-43c9-9440-172b0563caaa
+Content-Type: application/json
+
+{
+  "username": "Azriel R",
+  "email": "azriel@gmail.com",
+  "password": "",
+  "confPassword": "",
+  "role": "admin"
+}
+
+###
+
+// HAPUS USER
+DELETE http://localhost:5000/users/delete/e26e7aed-1f4c-4111-96a0-3f7e0ce23918
+
+###
+
+// Login User
+POST http://localhost:5000/auth/login
+Content-Type: application/json
+
+{
+  "email": "maguire@gmail.com",
+  "password": "12345"
+}
+
+###
+GET  http://localhost:5000/auth/me
+
+
+###
+
+

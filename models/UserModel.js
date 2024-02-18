@@ -1,19 +1,11 @@
 import { Sequelize } from "sequelize";
 import db from "../config/Database.js";
-import Users from "./users.js";
 
 const { DataTypes } = Sequelize;
 
-const Profile = db.define(
-  "Profile",
+const User = db.define(
+  "users",
   {
-    userId: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      validate: {
-        notEmpty: true,
-      },
-    },
     uuid: {
       type: DataTypes.STRING,
       defaultValue: DataTypes.UUIDV4,
@@ -22,54 +14,38 @@ const Profile = db.define(
         notEmpty: true,
       },
     },
-    firstName: {
+    username: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: true,
+        len: [3, 100],
+      },
+    },
+    email: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: true,
+        isEmail: true,
+      },
+    },
+    password: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
         notEmpty: true,
       },
     },
-    lastName: {
+    role: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
         notEmpty: true,
       },
     },
-    phone: {
+    refreshToken: {
       type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        notEmpty: true,
-      },
-    },
-    address: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        notEmpty: true,
-      },
-    },
-    city: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        notEmpty: true,
-      },
-    },
-    country: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        notEmpty: true,
-      },
-    },
-    image: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        notEmpty: true,
-      },
     },
   },
   {
@@ -77,7 +53,4 @@ const Profile = db.define(
   }
 );
 
-Users.hasMany(Profile);
-Profile.belongsTo(Users, { foreignKey: "userId" });
-
-export default Profile;
+export default User;

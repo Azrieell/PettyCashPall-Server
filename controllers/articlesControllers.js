@@ -1,7 +1,11 @@
-import Articles from "../models/articles.js";
+import Articles from "../models/ArticleModel.js";
 
-export const getArticles = (req, res) => {
+export const getArticles = async (req, res) => {
+  try{
+    
+  } catch {
 
+  }
 }
 
 export const getArticlesById = (req, res) => {

@@ -1,5 +1,5 @@
-import Profile from "../models/profiles.js";
-import User from "../models/users.js";
+import Profile from "../models/ProfileModel.js";
+import User from "../models/UserModel.js";
 import bcryptjs from "bcryptjs";
 import fs from "fs";
 import path from "path";
@@ -82,7 +82,7 @@ export const createProfileAndUser = async (req, res) => {
       return res.status(422).json({ msg: "Image must be less than 2MB" });
     }
 
-    file.mv(`./public/images/${fileName}`, async (err) => {
+    file.mv(`../public/images/${fileName}`, async (err) => {
       if (err) return res.status(500).json({ msg: err.message });
     });
 
@@ -98,8 +98,10 @@ export const createProfileAndUser = async (req, res) => {
       firstName,
       lastName,
       phone,
+      organize,
       address,
       city,
+      state,
       country,
       image: fileName,
       url: url,
@@ -147,7 +149,7 @@ export const updateProfileUser = async (req, res) => {
       return res.status(422).json({ msg: "Images must be less than 2MB" });
     }
 
-    const filepath = `./public/images/${profile.image}`;
+    const filepath = `../public/images/${profile.image}`;
 
     if (fs.existsSync(filepath)) {
       try {
@@ -160,7 +162,7 @@ export const updateProfileUser = async (req, res) => {
       console.warn(`File ${filepath} not found`);
     }
 
-    file.mv(`./public/images/${fileName}`, (err) => {
+    file.mv(`../public/images/${fileName}`, (err) => {
       if (err) {
         console.error(`Error moving file: ${err}`);
         return res.status(500).json({ msg: "Error moving file" });
@@ -170,7 +172,7 @@ export const updateProfileUser = async (req, res) => {
     console.log("file:", file); // Cek apakah file terdeteksi
     console.log("fileName:", fileName); // Cek apakah fileName sesuai
 
-    file.mv(`./public/images/${fileName}`, (err) => {
+    file.mv(`../public/images/${fileName}`, (err) => {
       if (err) return res.status(500).json({ msg: err.message });
     });
   }
@@ -179,8 +181,10 @@ export const updateProfileUser = async (req, res) => {
     firstName,
     lastName,
     phone,
+    organize,
     address,
     city,
+    state,
     country,
   } = req.body;
 
@@ -190,8 +194,10 @@ export const updateProfileUser = async (req, res) => {
         firstName,
         lastName,
         phone,
+        organize,
         address,
         city,
+        state,
         country,
         image: fileName,
         url: `${req.protocol}://${req.get("host")}/images/${fileName}`,
@@ -224,7 +230,7 @@ export const deleteProfileImage = async (req, res) => {
       return res.status(404).json({ msg: "Profile not found" });
     }
 
-    const imagePath = `./public/images/${profile.image}`;
+    const imagePath = `../public/images/${profile.image}`;
 
     if (fs.existsSync(imagePath)) {
       fs.unlinkSync(imagePath);

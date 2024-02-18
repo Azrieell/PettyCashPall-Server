@@ -1,18 +1,18 @@
 import express from "express";
 import {
-  getIncomes,
-  getIncomesById,
-  createIncomes,
-  updateIncomes,
-  deleteIncomes
+  getAllIncomes,
+  getIncomesByUserId,
+  createIncome,
+  updateIncome,
+  deleteIncome
 } from "../controllers/incomesControllers.js";
 
 const router = express.Router();
 
-router.get('/incomes', getIncomes);
-router.get('/incomes/:id', getIncomesById);
-router.post('/incomes', createIncomes);
-router.patch('/incomes/:id', updateIncomes);
-router.delete('/incomes/:id', deleteIncomes);
+router.get('/incomes' ,getAllIncomes);
+router.get('/incomes/:id',  getIncomesByUserId);
+router.post('/incomes/add', createIncome);
+router.patch('/incomes/edit/:id', updateIncome);
+router.delete('/incomes/delete/:id', deleteIncome);
 
 export default router
