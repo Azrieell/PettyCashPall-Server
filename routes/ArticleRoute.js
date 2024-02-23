@@ -5,14 +5,15 @@ import {
   createArticles,
   updateArticles,
   deleteArticles
-} from "../controllers/articlesControllers.js"
+} from "../controllers/ArticlesControllers.js"
+import {verifyUser, adminOnly} from '../middleware/AuthUser.js'
 
 const router = express.Router();
 
-router.get('/articles', getArticles);
-router.get('/articles/:id', getArticlesById);
-router.post('/articles', createArticles);
-router.patch('/articles/:id', updateArticles);
-router.delete('/articles/:id', deleteArticles);
+router.get('/articles',verifyUser,adminOnly, getArticles);
+router.get('/articles/:id',verifyUser,adminOnly, getArticlesById);
+router.post('/articles',verifyUser,adminOnly, createArticles);
+router.patch('/articles/:id',verifyUser,adminOnly, updateArticles);
+router.delete('/articles/:id',verifyUser,adminOnly, deleteArticles);
 
 export default router

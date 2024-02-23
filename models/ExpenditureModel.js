@@ -8,22 +8,22 @@ const {
   DataTypes
 } = Sequelize;
 
-const Incomes = db.define('incomes', {
-  total_income: {
+const Expenditure = db.define('expenditure', {
+  total_expenditure: {
     type: DataTypes.INTEGER,
     allowNull: false,
     validate: {
       notEmpty: true,
     }
   },
-  date_of_entry: {
+  date_expenditure: {
     type: DataTypes.DATE,
     allowNull: false,
     validate: {
       notEmpty: true,
     }
   },
-  description_of_entry: {
+  description_expenditure: {
     type: DataTypes.STRING,
     allowNull: false,
     validate: {
@@ -41,7 +41,7 @@ const Incomes = db.define('incomes', {
   freezeTableName: true
 });
 
-Users.hasMany(Incomes);
-Incomes.belongsTo(Users, {foreignKey: 'userId'});
+Users.hasMany(Expenditure);
+Expenditure.belongsTo(Users, {foreignKey: 'userId'});
 
-export default Incomes;
+export default Expenditure;

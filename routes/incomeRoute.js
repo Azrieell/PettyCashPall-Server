@@ -7,12 +7,14 @@ import {
   deleteIncome
 } from "../controllers/incomesControllers.js";
 
+import {verifyUser} from "../middleware/AuthUser.js";
+
 const router = express.Router();
 
-router.get('/incomes' ,getAllIncomes);
-router.get('/incomes/:id',  getIncomesByUserId);
-router.post('/incomes/add', createIncome);
-router.patch('/incomes/edit/:id', updateIncome);
-router.delete('/incomes/delete/:id', deleteIncome);
+router.get('/incomes',verifyUser, getAllIncomes);
+router.get('/incomes/:id',verifyUser, getIncomesByUserId);
+router.post('/incomes/add',verifyUser, createIncome);
+router.patch('/incomes/edit/:id',verifyUser, updateIncome);
+router.delete('/incomes/delete/:id',verifyUser, deleteIncome);
 
 export default router

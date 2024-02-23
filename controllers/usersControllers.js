@@ -1,4 +1,3 @@
-// UsersController.js
 import User from "../models/UserModel.js";
 import bcryptjs from "bcryptjs";
 
@@ -31,13 +30,8 @@ export const getUsersById = async (req, res) => {
   }
 }
 
-export const createUsers = async (req, res) => {
-  const { username, email, password, confPassword, role } = req.body;
-
-  // Pastikan semua field yang diperlukan diisi
-  if (!username || !email || !password || !confPassword || !role) {
-    return res.status(400).json({ msg: "All fields are required" });
-  }
+export const createAdmin = async (req, res) => {
+  const { username, email, password, confPassword } = req.body;
 
   // Pastikan password sesuai dengan konfirmasi password
   if (password !== confPassword) {
@@ -51,7 +45,7 @@ export const createUsers = async (req, res) => {
       username: username,
       email: email,
       password: hashPassword,
-      role: role
+      role: 'admin'
     });
 
     // Berikan respons berhasil

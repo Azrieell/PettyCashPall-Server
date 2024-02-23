@@ -1,4 +1,3 @@
-// AuthUser.js
 import User from "../models/UserModel.js";
 import jwt from "jsonwebtoken";
 
@@ -17,7 +16,7 @@ export const verifyUser = async (req, res, next) => {
       return res.status(404).json({ msg: 'User tidak ditemukan' });
     }
 
-    req.userId = user.uuid;
+    req.userId = user.id; 
     req.role = user.role;
 
     next();

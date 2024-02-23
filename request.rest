@@ -8,7 +8,7 @@ GET http://localhost:5000/users/9f2fe5ba-dac1-42a5-9e65-b6e77e912c4d
 ###
 
 // ADD USER
-POST  http://localhost:5000/users/add
+POST  http://localhost:5000/admin/add
 Content-Type: application/json
 
 {
