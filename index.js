@@ -8,8 +8,9 @@ import UsersRoute from "./routes/UsersRoute.js";
 import AuthRoute from "./routes/AuthRoute.js";
 import IncomesRoute from "./routes/IncomeRoute.js"; 
 import ArticleRoute from "./routes/ArticleRoute.js";
-import CategoriRoute from "./routes/CategoriRoute.js";
 import ExpenditureRoute from "./routes/ExpenditureRoute.js";
+import IncomeCategoryRoute from "./routes/IncomesCategoryRoute.js";
+import ExpenditureCategoryRoute from "./routes/ExpenditureCategoryRoute.js";
 
 dotenv.config();
 
@@ -26,21 +27,21 @@ try {
 //     await db.sync();
 // })()
 
-// app.use(cors({
-//   credentials: true,
-//   origin: 'http://localhost:5173'
-// }));
+app.use(cors({
+  credentials: true,
+  origin: 'http://localhost:5173'
+}));
 
 app.use(express.json());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
-app.use(cors());
 app.use(UsersRoute); // Tambahkan path untuk UsersRoute
 app.use(AuthRoute);
 app.use(IncomesRoute); 
 app.use(ArticleRoute);
-app.use(CategoriRoute);
 app.use(ExpenditureRoute);
+app.use(IncomeCategoryRoute);
+app.use(ExpenditureCategoryRoute);
 
 app.listen(process.env.APP_PORT, () => {
   console.log(`Server Up And Running...`)

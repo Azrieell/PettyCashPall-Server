@@ -1,9 +1,9 @@
-import Categori from "../models/CategoriModel.js";
+import IncomesCategoryModel from "../models/IncomesCategoryModel.js";
 
 
-export const getCategori = async (req, res) => {
+export const getIncomesCategori = async (req, res) => {
   try {
-    const categori = await Categori.findAll();
+    const categori = await IncomesCategoryModel.findAll();
     res.status(200).json(categori);
   } catch (error) {
     res.status(500).json({ msg: error.message });
@@ -11,11 +11,11 @@ export const getCategori = async (req, res) => {
 }
 
 
-export const createCategori = async (req, res) => {
-  const { income_category, expenditure_category } = req.body;
+export const createIncomesCategori = async (req, res) => {
+  const { income_category } = req.body;
 
   try {
-    const newCategori = await Categori.create({ income_category, expenditure_category });
+    const newCategori = await IncomesCategoryModel.create({ income_category });
     res.status(201).json(newCategori);
   } catch (error) {
     res.status(500).json({ msg: error.message });
@@ -23,16 +23,16 @@ export const createCategori = async (req, res) => {
 };
 
 
-export const updateCategori = async (req, res) => {
+export const updateIncomesCategori = async (req, res) => {
   const categoryId = req.params.id;
-  const { income_category, expenditure_category } = req.body;
+  const { income_category } = req.body;
 
   try {
-    const categori = await Categori.findByPk(categoryId);
+    const categori = await IncomesCategoryModel.findByPk(categoryId);
     if (!categori) {
       return res.status(404).json({ msg: "Category not found" });
     }
-    await categori.update({ income_category, expenditure_category });
+    await categori.update({ income_category });
     res.status(200).json({ msg: "Category updated successfully" });
   } catch (error) {
     res.status(500).json({ msg: error.message });
@@ -40,16 +40,14 @@ export const updateCategori = async (req, res) => {
 };
 
 
-export const deleteCategori = async (req, res) => {
+export const deleteIncomesCategori = async (req, res) => {
   const categoryId = req.params.id;
 
   try {
-    const categori = await Categori.findByPk(categoryId);
+    const categori = await IncomesCategoryModel.findByPk(categoryId);
     if (!categori) {
       return res.status(404).json({ msg: "Category not found" });
     }
-
-
     await categori.destroy();
     res.status(200).json({ msg: "Category deleted successfully" });
   } catch (error) {
